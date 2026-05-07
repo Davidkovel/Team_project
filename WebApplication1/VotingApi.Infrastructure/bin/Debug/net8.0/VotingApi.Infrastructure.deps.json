@@ -1,0 +1,56 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "VotingApi.Infrastructure/1.0.0": {
+        "dependencies": {
+          "VotingApi.Application": "1.0.0",
+          "VotingApi.Domain": "1.0.0"
+        },
+        "runtime": {
+          "VotingApi.Infrastructure.dll": {}
+        }
+      },
+      "VotingApi.Application/1.0.0": {
+        "dependencies": {
+          "VotingApi.Domain": "1.0.0"
+        },
+        "runtime": {
+          "VotingApi.Application.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "VotingApi.Domain/1.0.0": {
+        "runtime": {
+          "VotingApi.Domain.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "VotingApi.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "VotingApi.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "VotingApi.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

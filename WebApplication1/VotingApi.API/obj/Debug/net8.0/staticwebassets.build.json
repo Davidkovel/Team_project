@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "otci/YprJvu5QKxQcHJrPp4Ocun+6+/K66M5IaxWpL8=",
+  "Source": "VotingApi.API",
+  "BasePath": "_content/VotingApi.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
