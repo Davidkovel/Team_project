@@ -8,13 +8,10 @@ using WebApplication1.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configuration for DbContext and Identity
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=app.db";
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
 
@@ -24,7 +21,6 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     options.Password.RequiredLength = 6;
 }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
-// JWT
 var jwtKey = builder.Configuration["Jwt:Key"] ?? "very_long_default_dev_key_change_me";
 var keyBytes = Encoding.UTF8.GetBytes(jwtKey);
 
@@ -52,7 +48,6 @@ builder.Services.AddAuthorization(options =>
 
 var app = builder.Build();
 
-// Seed roles and admin user
 using (var scope = app.Services.CreateScope())
 {
     var svc = scope.ServiceProvider;
@@ -76,7 +71,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
