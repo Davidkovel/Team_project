@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingApi.API", "VotingApi.API\VotingApi.API.csproj", "{E9D86547-CA83-4D70-B2A4-7F3D6216417F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingApi.Application", "VotingApi.Application\VotingApi.Application.csproj", "{EA456AFF-93E0-41D8-9B54-E2441E242DD1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingApi.Domain", "VotingApi.Domain\VotingApi.Domain.csproj", "{559C90C8-B9C3-4874-86FF-010A87C1EEF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingApi.Infrastructure", "VotingApi.Infrastructure\VotingApi.Infrastructure.csproj", "{FB2749AD-479B-4589-92DC-FB12B208EF3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingApi.Shared", "VotingApi.Shared\VotingApi.Shared.csproj", "{7305BDE1-B09D-4E8E-BC53-6EC84A780577}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E9D86547-CA83-4D70-B2A4-7F3D6216417F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9D86547-CA83-4D70-B2A4-7F3D6216417F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9D86547-CA83-4D70-B2A4-7F3D6216417F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9D86547-CA83-4D70-B2A4-7F3D6216417F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA456AFF-93E0-41D8-9B54-E2441E242DD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA456AFF-93E0-41D8-9B54-E2441E242DD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA456AFF-93E0-41D8-9B54-E2441E242DD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA456AFF-93E0-41D8-9B54-E2441E242DD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{559C90C8-B9C3-4874-86FF-010A87C1EEF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{559C90C8-B9C3-4874-86FF-010A87C1EEF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{559C90C8-B9C3-4874-86FF-010A87C1EEF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{559C90C8-B9C3-4874-86FF-010A87C1EEF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB2749AD-479B-4589-92DC-FB12B208EF3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB2749AD-479B-4589-92DC-FB12B208EF3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB2749AD-479B-4589-92DC-FB12B208EF3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB2749AD-479B-4589-92DC-FB12B208EF3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7305BDE1-B09D-4E8E-BC53-6EC84A780577}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7305BDE1-B09D-4E8E-BC53-6EC84A780577}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7305BDE1-B09D-4E8E-BC53-6EC84A780577}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7305BDE1-B09D-4E8E-BC53-6EC84A780577}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

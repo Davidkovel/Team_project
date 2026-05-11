@@ -1,5 +1,4 @@
-﻿
-.idea/
+﻿.idea/
 bin/
 obj/
 
@@ -19,6 +18,9 @@ WebApplication1/bin/
 WebApplication1/obj/
 WebApplication1/.idea/
 WebApplication1/app.db
+
+WebApplication1/**/bin/
+WebApplication1/**/obj/
 
 *.nupkg
 *.snupkg
