@@ -1,4 +1,3 @@
-<<<<<<< HEAD:WebApplication1/Program.cs
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -6,13 +5,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebApplication1.Data;
 using WebApplication1.Models;
-=======
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
->>>>>>> origin/main:WebApplication1/VotingApi.API/Program.cs
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,11 +76,8 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 

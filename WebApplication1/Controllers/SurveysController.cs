@@ -154,4 +154,46 @@ namespace WebApplication1.Controllers
             return Ok(result);
         }
     }
+    
+    
+    [HttpGet("{id}/statistics")]
+    [Authorize]
+    public async Task<IActionResult> Statistics(int id)
+    {
+        var survey = await _db.Surveys
+            .Include(x => x.Questions)
+            .ThenInclude(x => x.Options)
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        if (survey == null)
+            return NotFound();
+
+        var result = survey.Questions.Select(q =>
+        {
+            var totalVotes = q.Options.Sum(o => o.VotesCount);
+
+            return new
+            {
+                QuestionId = q.Id,
+                Question = q.Text,
+                TotalVotes = totalVotes,
+
+                Options = q.Options.Select(o => new
+                {
+                    OptionId = o.Id,
+                    Option = o.Text,
+                    Votes = o.VotesCount,
+
+                    Percentage = totalVotes == 0
+                        ? 0
+                        : Math.Round(
+                            (double)o.VotesCount /
+                            totalVotes * 100,
+                            2)
+                })
+            };
+        });
+
+        return Ok(result);
+    }
 }
