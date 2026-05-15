@@ -10,10 +10,18 @@ using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler =
+            ReferenceHandler.IgnoreCycles;
+    });
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -51,28 +59,100 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
 });
 
+builder.WebHost.UseUrls("http://0.0.0.0:8080");
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("frontend", policy =>
+    {
+        policy
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowAnyOrigin();
+    });
+});
+
 var app = builder.Build();
+
+app.UseCors("frontend");
 
 using (var scope = app.Services.CreateScope())
 {
     var svc = scope.ServiceProvider;
+
     var db = svc.GetRequiredService<ApplicationDbContext>();
+
     db.Database.EnsureCreated();
 
     var roleMgr = svc.GetRequiredService<RoleManager<IdentityRole>>();
+
     var userMgr = svc.GetRequiredService<UserManager<ApplicationUser>>();
 
-    if (!await roleMgr.RoleExistsAsync("Admin")) await roleMgr.CreateAsync(new IdentityRole("Admin"));
-    if (!await roleMgr.RoleExistsAsync("User")) await roleMgr.CreateAsync(new IdentityRole("User"));
+    // Roles
+    if (!await roleMgr.RoleExistsAsync("Admin"))
+        await roleMgr.CreateAsync(new IdentityRole("Admin"));
 
-    var adminEmail = builder.Configuration["Seed:AdminEmail"] ?? "admin@example.com";
+    if (!await roleMgr.RoleExistsAsync("User"))
+        await roleMgr.CreateAsync(new IdentityRole("User"));
+
+    // Admin
+    var adminEmail = "admin@example.com";
+
     var admin = await userMgr.FindByEmailAsync(adminEmail);
+
     if (admin == null)
     {
-        admin = new ApplicationUser { UserName = "admin", Email = adminEmail, EmailConfirmed = true };
-        var pwd = builder.Configuration["Seed:AdminPassword"] ?? "Admin123!";
-        var cr = await userMgr.CreateAsync(admin, pwd);
-        if (cr.Succeeded) await userMgr.AddToRoleAsync(admin, "Admin");
+        admin = new ApplicationUser
+        {
+            UserName = "admin",
+            Email = adminEmail,
+            EmailConfirmed = true
+        };
+
+        var result = await userMgr.CreateAsync(admin, "Admin123!");
+
+        if (result.Succeeded)
+        {
+            await userMgr.AddToRoleAsync(admin, "Admin");
+        }
+    }
+
+    // Seed survey
+    if (!db.Surveys.Any())
+    {
+        var survey = new Survey
+        {
+            Title = "Улюблена мова програмування",
+            Description = "Оберіть мову програмування",
+            IsPublished = true,
+            AllowRepeatVoting = false,
+            StartAt = DateTime.UtcNow.AddDays(-1),
+            EndAt = DateTime.UtcNow.AddDays(7),
+
+            CreatedById = admin.Id, // ВОТ ЭТО ГЛАВНОЕ
+
+            Questions = new List<Question>
+            {
+                new Question
+                {
+                    Text = "Яка ваша улюблена мова?",
+                    QuestionType = QuestionType.SingleChoice,
+                    IsRequired = true,
+
+                    Options = new List<Option>
+                    {
+                        new Option { Text = "C#" },
+                        new Option { Text = "JavaScript" },
+                        new Option { Text = "Python" },
+                        new Option { Text = "Java" }
+                    }
+                }
+            }
+        };
+
+        db.Surveys.Add(survey);
+
+        db.SaveChanges();
     }
 }
 

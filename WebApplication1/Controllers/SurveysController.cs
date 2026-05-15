@@ -153,47 +153,46 @@ namespace WebApplication1.Controllers
 
             return Ok(result);
         }
-    }
-    
-    
-    [HttpGet("{id}/statistics")]
-    [Authorize]
-    public async Task<IActionResult> Statistics(int id)
-    {
-        var survey = await _db.Surveys
-            .Include(x => x.Questions)
-            .ThenInclude(x => x.Options)
-            .FirstOrDefaultAsync(x => x.Id == id);
-
-        if (survey == null)
-            return NotFound();
-
-        var result = survey.Questions.Select(q =>
+        
+        [HttpGet("{id}/statistics")]
+        [Authorize]
+        public async Task<IActionResult> Statistics(int id)
         {
-            var totalVotes = q.Options.Sum(o => o.VotesCount);
+            var survey = await _db.Surveys
+                .Include(x => x.Questions)
+                .ThenInclude(x => x.Options)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
-            return new
+            if (survey == null)
+                return NotFound();
+
+            var result = survey.Questions.Select(q =>
             {
-                QuestionId = q.Id,
-                Question = q.Text,
-                TotalVotes = totalVotes,
+                var totalVotes = q.Options.Sum(o => o.VotesCount);
 
-                Options = q.Options.Select(o => new
+                return new
                 {
-                    OptionId = o.Id,
-                    Option = o.Text,
-                    Votes = o.VotesCount,
+                    QuestionId = q.Id,
+                    Question = q.Text,
+                    TotalVotes = totalVotes,
 
-                    Percentage = totalVotes == 0
-                        ? 0
-                        : Math.Round(
-                            (double)o.VotesCount /
-                            totalVotes * 100,
-                            2)
-                })
-            };
-        });
+                    Options = q.Options.Select(o => new
+                    {
+                        OptionId = o.Id,
+                        Option = o.Text,
+                        Votes = o.VotesCount,
 
-        return Ok(result);
+                        Percentage = totalVotes == 0
+                            ? 0
+                            : Math.Round(
+                                (double)o.VotesCount /
+                                totalVotes * 100,
+                                2)
+                    })
+                };
+            });
+
+            return Ok(result);
+        }
     }
 }
